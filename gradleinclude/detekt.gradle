@@ -1,0 +1,42 @@
+// This file is part of https://github.com/wtanaka/gradleinclude
+// Copyright (C) 2019 Wesley Tanaka <https://wtanaka.com>
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+project.ext.detekt_version = "1.0.0-RC14"
+repositories {
+    mavenCentral()
+    // For detekt
+    maven { url "https://plugins.gradle.org/m2/" }
+}
+
+configurations {
+    detekt
+}
+
+dependencies {
+    detekt "io.gitlab.arturbosch.detekt:detekt-cli:$detekt_version"
+}
+
+// Use the command line version of detekt because
+// the plugin does not deal with nested projects well
+task detekt(type: JavaExec) {
+    main = "io.gitlab.arturbosch.detekt.cli.Main"
+    classpath = configurations.detekt
+    def input = "$projectDir"
+    def config = project(':gradleinclude').projectDir.path + '/detekt.yml'
+    def filters = ".*test.*"
+    def params = ['-i', input, '-c', config, '-f', filters]
+    args(params)
+}
+check.dependsOn detekt
