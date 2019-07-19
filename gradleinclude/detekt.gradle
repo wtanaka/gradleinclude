@@ -34,7 +34,9 @@ task detekt(type: JavaExec) {
     main = "io.gitlab.arturbosch.detekt.cli.Main"
     classpath = configurations.detekt
     def input = "$projectDir"
-    def config = project(':gradleinclude').projectDir.path + '/detekt.yml'
+    def config = new File(
+            buildscript.getSourceFile().getParent(), "detekt.yml")
+            .absolutePath
     def filters = ".*test.*"
     def params = ['-i', input, '-c', config, '-f', filters]
     args(params)
