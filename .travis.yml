@@ -11,10 +11,16 @@ env:
   - GRADLE_VERSION=4.10.3 JAVA_VERSION=oraclejdk9
   - GRADLE_VERSION=5.3.1 JAVA_VERSION=openjdk8
   - GRADLE_VERSION=5.3.1 JAVA_VERSION=oraclejdk9
+before_cache:
+# Per https://guides.gradle.org/executing-gradle-builds-on-travisci/#enable_caching_of_downloaded_artifacts
+- rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+- rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
   directories:
   - node_modules
-  - $HOME/.gradle
+  # Per https://guides.gradle.org/executing-gradle-builds-on-travisci/#enable_caching_of_downloaded_artifacts
+  - $HOME/.gradle/caches/
+  - $HOME/.gradle/wrapper/
   - .gradle
 before_install:
   # sdkman helps to install different gradle versions
