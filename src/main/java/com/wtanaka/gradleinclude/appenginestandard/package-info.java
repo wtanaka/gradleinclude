@@ -15,10 +15,7 @@
  * limitations under the License. See accompanying LICENSE file.
  */
 
-package com.wtanaka.gradleinclude;
-
 /**
- * Example comment for checkstyle.
+ * App Engine Standard Example.
  */
-public class Example {
-}
+package com.wtanaka.gradleinclude.appenginestandard;
