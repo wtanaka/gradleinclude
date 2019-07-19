@@ -12,10 +12,18 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-apply from: project(':gradleinclude').projectDir.path + '/shadow.gradle'
-apply from: project(':gradleinclude').projectDir.path + '/kotlin.gradle'
-apply from: project(':gradleinclude').projectDir.path + '/jacoco.gradle'
-apply from: project(':gradleinclude').projectDir.path + '/detekt.gradle'
-apply from: project(':gradleinclude').projectDir.path + '/ktlint.gradle'
-apply from: project(':gradleinclude').projectDir.path + '/findbugs.gradle'
-apply from: project(':gradleinclude').projectDir.path + '/proto.gradle'
+
+apply plugin: 'findbugs'
+
+findbugs {
+    excludeFilter = new File(
+            buildscript.getSourceFile().getParent(),
+            "findbugs-filter.xml")
+}
+
+tasks.withType(FindBugs) {
+    reports {
+        xml.enabled = false
+        html.enabled = true
+    }
+}
