@@ -8,9 +8,11 @@ env:
   # Java 9 doesn't work with Gradle 4.0
   #- GRADLE_VERSION=4.0.1 JAVA_VERSION=oraclejdk9
   - GRADLE_VERSION=4.10.3 JAVA_VERSION=openjdk8
-  - GRADLE_VERSION=4.10.3 JAVA_VERSION=oraclejdk9
+  # Not working right now
+  #- GRADLE_VERSION=4.10.3 JAVA_VERSION=oraclejdk9
   - GRADLE_VERSION=5.3.1 JAVA_VERSION=openjdk8
-  - GRADLE_VERSION=5.3.1 JAVA_VERSION=oraclejdk9
+  # Not working right now
+  #- GRADLE_VERSION=5.3.1 JAVA_VERSION=oraclejdk9
 before_cache:
 # Per https://guides.gradle.org/executing-gradle-builds-on-travisci/#enable_caching_of_downloaded_artifacts
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
