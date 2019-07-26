@@ -9,6 +9,8 @@ env:
   #- GRADLE_VERSION=3.5.1
   - GRADLE_VERSION=4.0.1
   - GRADLE_VERSION=4.10.3
+  - GRADLE_VERSION=5.1.1
+  - GRADLE_VERSION=5.2.1
   - GRADLE_VERSION=5.3.1
 before_cache:
 # Per https://guides.gradle.org/executing-gradle-builds-on-travisci/#enable_caching_of_downloaded_artifacts
