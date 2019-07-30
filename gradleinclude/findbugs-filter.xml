@@ -20,4 +20,11 @@ limitations under the License.
     <!-- Already detected in Kotlin -->
     <Bug code="NP" />
   </Match>
+
+  <Match>
+    <!-- Reason: Protobuf auto-generated code. -->
+    <Bug pattern="UCF_USELESS_CONTROL_FLOW"/>
+    <Class name="~.*\$Builder"/>
+    <Method name="maybeForceBuilderInitialization"/>
+  </Match>
 </FindBugsFilter>
