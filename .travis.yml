@@ -1,18 +1,15 @@
 language: java
+# java 9 and gradle 2 not supported
+# java 9 and gradle 3 not supported
+# Java 9 doesn't work with Gradle 4.0
+jdk:
+  - openjdk8
 env:
-  #- GRADLE_VERSION=2.14 JAVA_VERSION=openjdk8
-  # java 9 and gradle 2 not supported
-  #- GRADLE_VERSION=3.5.1 JAVA_VERSION=openjdk8
-  # java 9 and gradle 3 not supported
-  - GRADLE_VERSION=4.0.1 JAVA_VERSION=openjdk8
-  # Java 9 doesn't work with Gradle 4.0
-  #- GRADLE_VERSION=4.0.1 JAVA_VERSION=oraclejdk9
-  - GRADLE_VERSION=4.10.3 JAVA_VERSION=openjdk8
-  # Not working right now
-  #- GRADLE_VERSION=4.10.3 JAVA_VERSION=oraclejdk9
-  - GRADLE_VERSION=5.3.1 JAVA_VERSION=openjdk8
-  # Not working right now
-  #- GRADLE_VERSION=5.3.1 JAVA_VERSION=oraclejdk9
+  #- GRADLE_VERSION=2.14
+  #- GRADLE_VERSION=3.5.1
+  - GRADLE_VERSION=4.0.1
+  - GRADLE_VERSION=4.10.3
+  - GRADLE_VERSION=5.3.1
 before_cache:
 # Per https://guides.gradle.org/executing-gradle-builds-on-travisci/#enable_caching_of_downloaded_artifacts
 - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
@@ -31,5 +28,5 @@ before_install:
   - echo sdkman_auto_answer=true > ~/.sdkman/etc/config
 script:
   - sdk install gradle $GRADLE_VERSION
-  - jdk_switcher use $JAVA_VERSION
+  #- jdk_switcher use $JAVA_VERSION
   - gradle check
