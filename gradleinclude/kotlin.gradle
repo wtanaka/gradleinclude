@@ -14,7 +14,7 @@
 // limitations under the License.
 
 buildscript {
-    def version = project.ext.properties.kotlin_version ?: '1.2.71'
+    def version = project.ext.properties.kotlin_version ?: '1.3.50'
     repositories {
         mavenCentral()
     }
@@ -24,6 +24,12 @@ buildscript {
 }
 
 apply plugin: org.jetbrains.kotlin.gradle.plugin.KotlinPluginWrapper
+
+repositories {
+    // this repo should be available in every subproject that uses kotlin
+    // https://discuss.kotlinlang.org/t/x/9049/2
+    mavenCentral() // or jcentrer
+}
 
 compileKotlin {
     kotlinOptions {
