@@ -21,8 +21,14 @@ test-pattern: # Configure exclusions for test sources
     - '.*/test/.*'
     - '.*Test.kt'
     - '.*Spec.kt'
+    # Generated code
+    - '.*/build/generated/.*'
   exclude-rule-sets:
+    # Exclude from tests and generated code
     - 'comments'
+    # Exclude from generated code
+    - 'naming'
+    - 'style'
   exclude-rules:
     - 'NamingRules'
     - 'WildcardImport'
