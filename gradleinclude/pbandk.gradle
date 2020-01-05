@@ -18,6 +18,8 @@
 apply from: project(':gradleinclude').projectDir.path + '/proto.gradle'
 
 repositories {
+    // TODO: Get this working
+    // per https://stackoverflow.com/a/34327202/2034423
     ivy {
         url 'https://repo1.maven.org/maven2/com/github/cretz/'
         layout 'pattern', {
@@ -33,12 +35,14 @@ repositories {
 
 dependencies {
     compile 'com.github.cretz.pbandk:pbandk-runtime-jvm:0.3.0'
+    // TODO: Get this working
+    // per https://stackoverflow.com/a/34327202/2034423
+    // https://repo1.maven.org/maven2/com/github/cretz/pbandk/
     compile 'com.github.cretz.pbandk:protoc-gen-kotlin-jvm:0.3.0'
     //This maps to the pattern: [organisation]:[module]:[revision]:[classifier]@[ext]
 
 }
 
-/*
 pluginManager.withPlugin("com.google.protobuf") {
     protobuf {
         plugins {
@@ -54,11 +58,15 @@ pluginManager.withPlugin("com.google.protobuf") {
 //                        "protoc-gen-kotlin"
                 // Does not work, tries to download .exe which does not exist
 //                artifact = 'com.github.cretz.pbandk:protoc-gen-kotlin-jvm:0.3.0'
+// TODO: Download the compiler into a subdir in current project and
+// set path to that binary
             }
         }
         generateProtoTasks {
             all().each { task ->
                 task.outputs.upToDateWhen { false }
+// TODO: Get this working
+/*
                 task.builtins {
                     remove java
                 }
@@ -67,8 +75,8 @@ pluginManager.withPlugin("com.google.protobuf") {
                         //option 'kotlin_package=go2k.compile.go.dumppb'
                     }
                 }
+*/
             }
         }
     }
 }
-*/
