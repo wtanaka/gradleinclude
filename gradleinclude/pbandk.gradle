@@ -17,6 +17,58 @@
 
 apply from: project(':gradleinclude').projectDir.path + '/proto.gradle'
 
-dependencies {
-  compile 'com.github.cretz.pbandk:pbandk-runtime-jvm:0.3.0'
+repositories {
+    ivy {
+        url 'https://repo1.maven.org/maven2/com/github/cretz/'
+        layout 'pattern', {
+            m2compatible = true
+            artifact '/[organisation]/[module]/[revision]/[module]-[revision].[ext]'
+//            artifact '/[organisation]/[module]/[artifact]/[revision]/[artifact](-[revision]).[ext]'
+//            addArtifactPattern "http://repo1.maven.org/maven2/[organisation]/[module]/[revision]/[artifact](-[revision])-jdk15.[ext]"
+//            addArtifactPattern "http://repo1.maven.org/maven2/[organisation]/[artifact]/[revision]/[artifact](-[revision])-jdk15.[ext]"
+
+        }
+    }
 }
+
+dependencies {
+    compile 'com.github.cretz.pbandk:pbandk-runtime-jvm:0.3.0'
+    compile 'com.github.cretz.pbandk:protoc-gen-kotlin-jvm:0.3.0'
+    //This maps to the pattern: [organisation]:[module]:[revision]:[classifier]@[ext]
+
+}
+
+/*
+pluginManager.withPlugin("com.google.protobuf") {
+    protobuf {
+        plugins {
+            // Configure the kotlin code generator
+            kotlin {
+//                path = '/path/to/pbandk-0.7.2/' +
+//                        'protoc-gen-kotlin/' +
+//                        'protoc-gen-kotlin-jvm/' +
+//                        'build/install/' +
+//                        'protoc-gen-kotlin/bin/protoc-gen-kotlin'
+//                path = "/path/to/" +
+//                        "protoc-gen-kotlin-0.3.0/bin/" +
+//                        "protoc-gen-kotlin"
+                // Does not work, tries to download .exe which does not exist
+//                artifact = 'com.github.cretz.pbandk:protoc-gen-kotlin-jvm:0.3.0'
+            }
+        }
+        generateProtoTasks {
+            all().each { task ->
+                task.outputs.upToDateWhen { false }
+                task.builtins {
+                    remove java
+                }
+                task.plugins {
+                    kotlin {
+                        //option 'kotlin_package=go2k.compile.go.dumppb'
+                    }
+                }
+            }
+        }
+    }
+}
+*/

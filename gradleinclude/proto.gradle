@@ -41,7 +41,8 @@ clean {
     delete protobuf.generatedFilesBaseDir
 }
 
-if (respondsTo("idea")) {
+// If a plugin called "idea" ever loads, configure it
+pluginManager.withPlugin("idea") {
     idea {
         module {
             sourceDirs += file("${protobuf.generatedFilesBaseDir}/main/java");

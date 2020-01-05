@@ -12,6 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+apply from: project(':gradleinclude').projectDir.path + '/idea.gradle'
 apply from: project(':gradleinclude').projectDir.path + '/gitversion.gradle'
 apply from: project(':gradleinclude').projectDir.path + '/shadow.gradle'
 apply from: project(':gradleinclude').projectDir.path + '/kotlin.gradle'
@@ -23,7 +24,7 @@ apply from: project(':gradleinclude').projectDir.path + '/spotless.gradle'
 apply from: project(':gradleinclude').projectDir.path + '/pmd.gradle'
 apply from: project(':gradleinclude').projectDir.path + '/checkstyle.gradle'
 apply from: project(':gradleinclude').projectDir.path + '/proto.gradle'
-apply from: project(':gradleinclude').projectDir.path + '/pbandk.gradle'
+//apply from: project(':gradleinclude').projectDir.path + '/pbandk.gradle'
 apply from: project(':gradleinclude').projectDir.path + '/sass.gradle'
 apply from: project(':gradleinclude').projectDir.path + '/appenginestandard.gradle'
 apply from: project(':gradleinclude').projectDir.path + '/protobufjs.gradle'
