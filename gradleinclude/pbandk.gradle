@@ -15,10 +15,11 @@
 
 // https://github.com/cretz/pb-and-k
 
+project.ext.pbandk_version = '0.3.0'
+
 apply from: project(':gradleinclude').projectDir.path + '/proto.gradle'
 
 repositories {
-    // TODO: Get this working
     // per https://stackoverflow.com/a/34327202/2034423
     ivy {
         url 'https://repo1.maven.org/maven2/com/github/cretz/'
@@ -28,22 +29,48 @@ repositories {
 //            artifact '/[organisation]/[module]/[artifact]/[revision]/[artifact](-[revision]).[ext]'
 //            addArtifactPattern "http://repo1.maven.org/maven2/[organisation]/[module]/[revision]/[artifact](-[revision])-jdk15.[ext]"
 //            addArtifactPattern "http://repo1.maven.org/maven2/[organisation]/[artifact]/[revision]/[artifact](-[revision])-jdk15.[ext]"
-
         }
     }
 }
 
 dependencies {
-    compile 'com.github.cretz.pbandk:pbandk-runtime-jvm:0.3.0'
-    // TODO: Get this working
+    compile "com.github.cretz.pbandk:pbandk-runtime-jvm:$pbandk_version"
+
+    // Downloads pbandk binary into gradle cache
     // per https://stackoverflow.com/a/34327202/2034423
     // https://repo1.maven.org/maven2/com/github/cretz/pbandk/
-    compile 'com.github.cretz.pbandk:protoc-gen-kotlin-jvm:0.3.0'
-    //This maps to the pattern: [organisation]:[module]:[revision]:[classifier]@[ext]
+    // This maps to the pattern:
+    // [organisation]:[module]:[revision]:[classifier]@[ext]
+    compile "com.github.cretz.pbandk:protoc-gen-kotlin-jvm:$pbandk_version@zip"
+}
 
+// copies pbandk binary jar into local subdirectory
+// https://stackoverflow.com/a/26698161/2034423
+task copyDependencies(type: Copy) {
+    from project.configurations.compile
+    into "$buildDir/dependencies"
+}
+
+task protocGenKotlin(type: Copy) {
+    def zipFile = file(
+            "$buildDir/dependencies/protoc-gen-kotlin-jvm-${pbandk_version}.zip")
+    def outDir = file("$buildDir")
+
+    from zipTree(zipFile)
+    into outDir
+
+    dependsOn(copyDependencies)
+}
+
+allprojects {
 }
 
 pluginManager.withPlugin("com.google.protobuf") {
+    // Make sure protoc-gen-kotlin exists before running
+    // generateProto
+    afterEvaluate {
+        generateProto.dependsOn protocGenKotlin
+    }
     protobuf {
         plugins {
             // Configure the kotlin code generator
@@ -58,24 +85,24 @@ pluginManager.withPlugin("com.google.protobuf") {
 //                        "protoc-gen-kotlin"
                 // Does not work, tries to download .exe which does not exist
 //                artifact = 'com.github.cretz.pbandk:protoc-gen-kotlin-jvm:0.3.0'
-// TODO: Download the compiler into a subdir in current project and
+                path = "$buildDir/protoc-gen-kotlin-$pbandk_version/bin" +
+                        "/protoc-gen-kotlin"
 // set path to that binary
             }
         }
         generateProtoTasks {
             all().each { task ->
                 task.outputs.upToDateWhen { false }
-// TODO: Get this working
 /*
                 task.builtins {
                     remove java
                 }
+                */
                 task.plugins {
                     kotlin {
                         //option 'kotlin_package=go2k.compile.go.dumppb'
                     }
                 }
-*/
             }
         }
     }
