@@ -49,6 +49,7 @@ dependencies {
 task copyDependencies(type: Copy) {
     from project.configurations.compile
     into "$buildDir/dependencies"
+    include "**/protoc-gen-kotlin-jvm-${pbandk_version}.zip"
 }
 
 task protocGenKotlin(type: Copy) {
