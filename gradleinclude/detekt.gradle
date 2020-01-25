@@ -37,7 +37,8 @@ task detekt(type: JavaExec) {
     def config = new File(
             buildscript.getSourceFile().getParent(), "detekt.yml")
             .absolutePath
-    def filters = ".*test.*"
+    // generated/source directory used by pbandk
+    def filters = ".*test.*;.*generated/source.*"
     def params = ['-i', input, '-c', config, '-f', filters]
     args(params)
 }
