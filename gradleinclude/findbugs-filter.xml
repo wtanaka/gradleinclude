@@ -27,4 +27,10 @@ limitations under the License.
     <Class name="~.*\$Builder"/>
     <Method name="maybeForceBuilderInitialization"/>
   </Match>
+
+  <Match>
+    <!-- Reason: pbandk auto-generated code. -->
+    <Bug pattern="SE_BAD_FIELD"/>
+    <Class name="~.*google\.protobuf.*"/>
+  </Match>
 </FindBugsFilter>

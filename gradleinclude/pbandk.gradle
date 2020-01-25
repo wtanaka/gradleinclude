@@ -107,4 +107,17 @@ pluginManager.withPlugin("com.google.protobuf") {
             }
         }
     }
+    sourceSets {
+        main {
+            proto {
+                // In addition to the default 'src/main/proto'
+                // This can get created if you add a dependency on another
+                // subproject which contains .proto files
+                srcDir "$buildDir/extracted-include-protos/main"
+            }
+            kotlin {
+                srcDir "$buildDir/generated/source/proto/main/kotlin"
+            }
+        }
+    }
 }
